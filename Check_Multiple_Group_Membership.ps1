@@ -1,5 +1,5 @@
 ﻿##Author: Arvinder Dhar
-##Description : This script will check all users and if a user has mulipliple group membership for groups 1 - group 5, username along with the group membership will be displayed
+##Description : This script will check all users and if a user has multiple group membership for groups 1 - group 5, username along with the group membership will be displayed
 
 ##Important: Run the script using elevated rights
 ##Updated version will have feature to send the result via e-mail

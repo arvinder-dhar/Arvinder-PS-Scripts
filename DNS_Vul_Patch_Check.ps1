@@ -7,7 +7,8 @@ $result = $null
 $final_result = $null
 Remove-Item c:\users\$env:username\desktop\DNS_Server_Vuln.xlsx
 
-$dcs = Get-Content C:\users\$env:username\desktop\dc.txt ##Dc's in dc.txt file or you can pull list directly from ADDS PS Cmdlet
+##Dc's are present in dc.txt file or else pull list directly from Get-ADDomainController PS Cmdlet
+$dcs = Get-Content C:\users\$env:username\desktop\dc.txt 
 
 foreach ($dc in $dcs) {
 

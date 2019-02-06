@@ -8,10 +8,10 @@ foreach ($domain in $domains) {
 
 try{
 
-[array]$Hosting_servers += (Get-ADComputer -Filter { Name -like "*" } -Properties * -Server $domain ).DNSHostname 
-[array]$MyHosting_servers += (Get-ADComputer -Filter { Name -like "*" } -Properties * ).DNSHostname
+[array]$servers_1 += (Get-ADComputer -Filter { Name -like "*" } -Properties * -Server $domain ).DNSHostname 
+[array]$servers_2 += (Get-ADComputer -Filter { Name -like "*" } -Properties * ).DNSHostname
 
-[array]$servers = ($Hosting_servers + $MyHosting_servers) | select -Unique
+[array]$servers = ($servers_1 + $servers_2) | select -Unique
 }
 
 catch { #do nothing

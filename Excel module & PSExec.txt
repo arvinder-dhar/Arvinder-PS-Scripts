@@ -15,3 +15,5 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.github.com/dfi
 SOURCE : https://blogs.technet.microsoft.com/heyscriptingguy/2015/11/25/introducing-the-powershell-excel-module-2/
 
 psexec @C:\Users\arvinder\Desktop\1.txt -w "C:\AV_Folder" C:\AV_Folder\AV.exe /q /s
+
+PsExec.exe @C:\Users\arvinder\Desktop\1.txt cmd /c "powershell -noninteractive -command Uninstall-WindowsFeature -Name Windows-Defender"

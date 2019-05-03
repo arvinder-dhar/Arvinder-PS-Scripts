@@ -48,16 +48,27 @@ Function Get-PatchDate {
  if ($remote -eq "True" -and $ping -eq "True") {
 
        $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
-       Sort-Object InstalledOn -Descending | Select-Object -First 1).InstalledOn
+       Sort-Object InstalledOn -Descending | Select-Object -First 1).InstalledOn 
 
        $EndDate =  Get-Date
+       $lastpatchdate = $patchdate.ToString().Trim("12:00:00 AM")
        
        $patch_days =  (New-TimeSpan -Start $patchdate -End $EndDate).days
 
-        $Prop=[ordered]@{ #With or without [ordered]
-                'Computer Name'=$computer;
-                'Last Patch Date '=$patchdate;
-                'Patch Days'=$patch_days;
+       if ($computer -like "localhost"){
+                  $Prop=[ordered]@{ #With or without [ordered]
+                 'Computer Name'=$env:COMPUTERNAME ;
+                 'Last Patch Date '=$lastpatchdate;
+                 'Patch Days'=$patch_days;
+                    }
+                    }
+              
+                else  {
+                    $Prop=[ordered]@{ #With or without [ordered]
+                    'Computer Name'=$Computer ;
+                    'Last Patch Date '=$lastpatchdate;
+                    'Patch Days'=$patch_days;
+                    }
                 }
 
         $Obj=New-Object -TypeName PSObject -Property $Prop 

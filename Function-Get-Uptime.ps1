@@ -51,14 +51,16 @@ Function Get-Uptime {
     $startdate = $Boot.ConvertToDateTime($Boot.LastBootUpTime)
 
     $EndDate =  Get-Date
-    $uptime = (New-TimeSpan -Start $startdate -End $EndDate).days
+    #$uptime = (New-TimeSpan -Start $startdate -End $EndDate).days
+
+    $uptime = (New-TimeSpan -Start $startdate -End $EndDate).days + [math]::round((New-TimeSpan -Start $startdate -End $EndDate).hours/24,2)
 
     if ($computer -like "localhost"){
 
     $Prop=[ordered]@{ #With or without [ordered]
                 'Computer Name'=$env:COMPUTERNAME;
                 'Last Reboot Date '=$startdate;
-                'Uptime (Approx. Days)'=$uptime;
+                'Uptime (Days)'=$uptime;
                 }
                 }
           
@@ -66,7 +68,7 @@ Function Get-Uptime {
                 $Prop=[ordered]@{ #With or without [ordered]
                 'Computer Name'=$Computer;
                 'Last Reboot Date '=$startdate;
-                'Uptime (Approx. Days)'=$uptime;
+                'Uptime (Days)'=$uptime;
                 }
             }
 
@@ -80,7 +82,7 @@ else {
 
                 'Computer Name'=$computer;
                 'Last Reboot Date '="Computer Not Reachable";
-                'Uptime (Approx. Days)'="NA";
+                'Uptime (Days)'="NA";
                 }
 
         $Obj=New-Object -TypeName PSObject -Property $Prop 
@@ -91,5 +93,4 @@ else {
    }
 
  End{}
-
 }

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .Synopsis
    This Function will display Last Patched Date of computer(s)
 .DESCRIPTION
@@ -48,7 +48,7 @@ Function Get-PatchDate {
  if ($remote -eq "True" -and $ping -eq "True") {
 
        $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
-       sort InstalledOn -Descending | select -First 1).InstalledOn
+       Sort-Object InstalledOn -Descending | Select-Object -First 1).InstalledOn
 
        $EndDate =  Get-Date
        

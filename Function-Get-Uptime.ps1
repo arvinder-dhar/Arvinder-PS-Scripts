@@ -1,4 +1,4 @@
-﻿<#
+<#
 .Synopsis
    This Function will display uptime of computer(s)
 .DESCRIPTION
@@ -43,25 +43,32 @@ Function Get-Uptime {
  foreach($Computer in $ComputerName){
 
     $remote= [bool](Test-WSMan -ComputerName $Computer -ErrorAction SilentlyContinue)
-    $ping = Test-Connection -ComputerName $Computer -Quiet
+    $ping = Test-Connection -ComputerName $Computer -Quiet -Count 2
 
  if ($remote -eq "True" -and $ping -eq "True") {
 
     $Boot = Get-WmiObject -Class win32_operatingsystem -ComputerName $Computer -ErrorAction SilentlyContinue
     $startdate = $Boot.ConvertToDateTime($Boot.LastBootUpTime)
 
-    $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
-                    sort InstalledOn -Descending | select -First 1).InstalledOn
-
     $EndDate =  Get-Date
     $uptime = (New-TimeSpan -Start $startdate -End $EndDate).days
 
-        $Prop=[ordered]@{ #With or without [ordered]
+    if ($computer -like "localhost"){
 
-                'Computer Name'=$computer;
+    $Prop=[ordered]@{ #With or without [ordered]
+                'Computer Name'=$env:COMPUTERNAME;
                 'Last Reboot Date '=$startdate;
                 'Uptime (Approx. Days)'=$uptime;
                 }
+                }
+          
+            else  {
+                $Prop=[ordered]@{ #With or without [ordered]
+                'Computer Name'=$Computer;
+                'Last Reboot Date '=$startdate;
+                'Uptime (Approx. Days)'=$uptime;
+                }
+            }
 
         $Obj=New-Object -TypeName PSObject -Property $Prop 
         Write-Output $Obj

@@ -39,9 +39,9 @@ if ($value -eq "3" )
 {
  $acc= Read-Host " enter the user-id for which password needs to be changed"
  $psd = Read-Host " enter the new password"
- $SecPaswd= ConvertTo-SecureString –String "$psd" –AsPlainText –Force
+ $SecPaswd= ConvertTo-SecureString â€“String "$psd" â€“AsPlainText â€“Force
 
- Set-ADAccountPassword -Reset -NewPassword $SecPaswd –Identity $acc
+ Set-ADAccountPassword -Reset -NewPassword $SecPaswd â€“Identity $acc
 
  }
 

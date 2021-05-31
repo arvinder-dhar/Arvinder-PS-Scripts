@@ -1,6 +1,6 @@
 ######Start######
 
-<# Author: Arvinder (a642056)
+<# Author: Arvinder
   Short Description : This Script will retrieve the AD Objects added to the DFS Path and retreive the basic information like
                       1. Description
                       2. Owner(s)

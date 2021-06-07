@@ -10,7 +10,7 @@
 Set-ExecutionPolicy RemoteSigned
  
 #Switches to Directory "adextensions"
-cd C:\adextensions
+Set-Location C:\adextensions
 
 #Imports data from csv to "data" variable
 $Data = Import-Csv '.\DeleteAccounts.csv'

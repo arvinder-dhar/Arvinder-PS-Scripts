@@ -11,7 +11,7 @@ try{
 [array]$servers_1 += (Get-ADComputer -Filter { Name -like "*" } -Properties * -Server $domain ).DNSHostname 
 [array]$servers_2 += (Get-ADComputer -Filter { Name -like "*" } -Properties * ).DNSHostname
 
-[array]$servers = ($servers_1 + $servers_2) | select -Unique
+[array]$servers = ($servers_1 + $servers_2) | Select-Object -Unique
 }
 
 catch { #do nothing
@@ -28,10 +28,10 @@ $service_status = [bool](Get-Service -ComputerName $server | Where-Object {$_.Di
 
 if ($service_status -eq $true) {
 
-$report = "" | select ServerName,WindowsDefService,ServiceStatus
+$report = "" | Select-Object ServerName,WindowsDefService,ServiceStatus
 $report.ServerName = $server
-$report.WindowsDefService = (gsv -ComputerName $server | Where-Object {$_.DisplayName -like "windows defender service"}).displayname
-$report.ServiceStatus = (gsv -ComputerName $server | Where-Object {$_.DisplayName -like "windows defender service"}).status
+$report.WindowsDefService = (Get-Service -ComputerName $server | Where-Object {$_.DisplayName -like "windows defender service"}).displayname
+$report.ServiceStatus = (Get-Service -ComputerName $server | Where-Object {$_.DisplayName -like "windows defender service"}).status
 
 $report
 [array]$final_report += $report

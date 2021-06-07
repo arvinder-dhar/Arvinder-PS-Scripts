@@ -20,7 +20,7 @@ $servers = Get-Content .\servers.txt
        #Creating a Table
 
        $Hotfix = $null
-       $ServerDetails = "" | Select ServerName,Ping_Status,Hotfix_Id
+       $ServerDetails = "" | Select-Object ServerName,Ping_Status,Hotfix_Id
 
        $ServerDetails.ServerName = $server
        $ServerDetails.Ping_Status = "Server is Up"
@@ -35,7 +35,7 @@ $servers = Get-Content .\servers.txt
        
 Catch{
 
-       $ServerDetails = "" | Select ServerName,Ping_Status,Hotfix_Id
+       $ServerDetails = "" | Select-Object ServerName,Ping_Status,Hotfix_Id
 
        $ServerDetails.ServerName = $server
        $ServerDetails.Ping_Status = "Server Up, however no info fetched"
@@ -49,7 +49,7 @@ Catch{
 
 else {
 
-       $ServerDetails = "" | Select ServerName,Ping_Status,Hotfix_Id
+       $ServerDetails = "" | Select-Object ServerName,Ping_Status,Hotfix_Id
 
        $ServerDetails.ServerName = $server
        $ServerDetails.Ping_Status = "Server not Reachable"

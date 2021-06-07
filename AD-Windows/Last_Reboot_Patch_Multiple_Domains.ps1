@@ -31,13 +31,13 @@ try{
  
        #Creating a Table
  
-       $ServerDetails = "" | Select ComputerName,Uptime,PatchDate,PatchDays
+       $ServerDetails = "" | Select-Object ComputerName,Uptime,PatchDate,PatchDays
        $ServerDetails.ComputerName = $Server
       
        $Boot = Get-WmiObject -Class win32_operatingsystem -ComputerName $server -ErrorAction SilentlyContinue
        $startdate = $Boot.ConvertToDateTime($Boot.LastBootUpTime)
  
-       $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $server -ErrorAction SilentlyContinue | sort InstalledOn -Descending | select -First 1).InstalledOn
+       $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $server -ErrorAction SilentlyContinue | Sort-Object InstalledOn -Descending | Select-Object -First 1).InstalledOn
        $EndDate =  Get-Date
        $uptime = (New-TimeSpan -Start $startdate -End $EndDate).days
        $serverDetails.Uptime = $uptime
@@ -54,7 +54,7 @@ try{
       
 Catch{
  
-      $ServerDetails = "" | Select ComputerName,Uptime,PatchDate,PatchDays
+      $ServerDetails = "" | Select-Object ComputerName,Uptime,PatchDate,PatchDays
       $ServerDetails.ComputerName = $Server
       $ServerDetails.Uptime = "Information cannot be fetched"
       $ServerDetails.PatchDate = "NA"
@@ -66,7 +66,7 @@ Catch{
  
 else {
  
-      $ServerDetails = "" | Select ComputerName,Uptime,PatchDate,PatchDays
+      $ServerDetails = "" | Select-Object ComputerName,Uptime,PatchDate,PatchDays
       $ServerDetails.ComputerName = $Server
       $ServerDetails.Uptime = "Server is not reachable"
       $ServerDetails.PatchDate = "NA"

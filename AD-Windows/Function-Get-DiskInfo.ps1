@@ -50,7 +50,7 @@ $ping = Test-Connection -ComputerName $Computer -Quiet
     {
 
 $data = Get-WmiObject -ComputerName $Computer -class Win32_logicalDisk -ErrorAction SilentlyContinue | Where-Object {$_.DriveType -eq '3'} |
-Select @{n='Computer Name';e={$_.PSComputerName}}, 
+Select-Object @{n='Computer Name';e={$_.PSComputerName}}, 
         @{n='Disk Name';e={$_.DeviceID}},
          @{n='Total Size(GB)';e={[math]::Round(($_.Size)/1GB,1)}},
           @{n='Free Space(GB)';e={[math]::Round(($_.Freespace)/1GB,1)}} -OutVariable data

@@ -11,7 +11,7 @@ $users = (Get-ADUser -Filter 'Name -like "*"' -Server "domain.name").samaccountn
 
 foreach ($user in $users) {
 
-$report = "" | select UserName,GroupMembership,GroupCount
+$report = "" | Select-Object UserName,GroupMembership,GroupCount
 
 $report.UserName = $user
 

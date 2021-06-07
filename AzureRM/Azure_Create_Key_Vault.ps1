@@ -13,6 +13,7 @@ New-AzureRmKeyVault -VaultName $vaultName -ResourceGroupName $rgName -Location $
 
 # create a software managed key
 $key = Add-AzureKeyVaultKey -VaultName $vaultName -Name $keyName -Destination 'Software'
+$key #check this
 
 # retrieve the storage account key (the secret) 
 $storageKey = Get-AzureRmStorageAccountKey -ResourceGroupName $rgName -Name $storageAccount 
@@ -22,3 +23,4 @@ $secretvalue = ConvertTo-SecureString $storageKey[0].Value -AsPlainText -Force
 
 # set the secret value 
 $secret = Set-AzureKeyVaultSecret -VaultName $vaultName -Name $secretName -SecretValue $secretvalue 
+$secret #check this

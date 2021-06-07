@@ -208,7 +208,7 @@ $body = "<style type=text/css>
   <tr>
     <td class=tg-0lax>domain4</td>
     <td class=tg-dg7a>$domain4_user_count</td>
-    <td class=tg-dg7a>$domain5_computer_count</td>
+    <td class=tg-dg7a>$domain4_computer_count</td>
   </tr>
   <tr>
     <td class=tg-0lax>domain5</td>

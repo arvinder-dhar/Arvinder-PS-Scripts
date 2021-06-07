@@ -7,7 +7,7 @@ $final_report = @()
 
 foreach ($machine in $Data) {
 
-    $report = "" | Select Hostname,ping_status,Domain_Name
+    $report = "" | Select-Object Hostname,ping_status,Domain_Name
     $ping = Test-Connection -ComputerName $machine -Count 1 -Quiet
     $fqdn = [System.Net.Dns]::GetHostByName($machine).hostname
     $domain = $fqdn.Substring($fqdn.IndexOf(".") + 1)

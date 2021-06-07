@@ -14,7 +14,7 @@ $servers = Get-Content .\servers.txt
             $split = $server.Split(".")
             $domain = $split[1]+"."+$split[2]+"."+$split[3]+"."+$split[4]
 
-           $ServerDetails = "" | Select ComputerName,passwordlastset,pingstatus
+           $ServerDetails = "" | Select-Object ComputerName,passwordlastset,pingstatus
      
            $Server_netbios = $server.Split(".")[0]
            $date = (Get-ADComputer -Identity $Server_netbios -Properties * -Server $domain ).PasswordLastSet

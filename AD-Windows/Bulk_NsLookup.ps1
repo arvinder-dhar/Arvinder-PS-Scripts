@@ -9,7 +9,7 @@ foreach ($ip in $Info) {
 
 try {
 
-    $Details = "" | Select Hostname, IP
+    $Details = "" | Select-Object Hostname, IP
     $Machine = ([System.Net.DNS]::GetHostEntry("$ip")).HostName
     $address = (([System.Net.DNS]::GetHostEntry("$ip")).AddressList).IPAddressToString
   
@@ -22,7 +22,7 @@ try {
 
 catch {
 
-    $Details = "" | Select Hostname, IP
+    $Details = "" | Select-Object Hostname, IP
    
     $Details.Hostname = "Cannot Nslookup for $ip"
     $Details.IP = $null

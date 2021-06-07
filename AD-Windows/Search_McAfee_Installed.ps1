@@ -19,7 +19,7 @@ foreach ( $server in $servers) {
   
        #Creating a Table
 
-       $ServerDetails = "" | Select ServerName,Mcafee_status
+       $ServerDetails = "" | Select-Object ServerName,Mcafee_status
 
        $ServerDetails.ServerName = $server
        $mcafee_check = [bool](Get-WmiObject -ComputerName $server -Class win32_product | Where-Object {$_.Name -like "mcafee*"})
@@ -38,7 +38,7 @@ foreach ( $server in $servers) {
 
   Catch{
 
-      $ServerDetails = "" | Select ServerName,Mcafee_status
+      $ServerDetails = "" | Select-Object ServerName,Mcafee_status
 
       $ServerDetails.ServerName = $server
       $ServerDetails.Mcafee_status = "Server either down or not reachable"
@@ -52,7 +52,7 @@ foreach ( $server in $servers) {
 
 else {
 
-      $ServerDetails = "" | Select ServerName,Mcafee_status
+      $ServerDetails = "" | Select-Object ServerName,Mcafee_status
 
       $ServerDetails.ServerName = $server
       $ServerDetails.Mcafee_status = "Server either down or not reachable"

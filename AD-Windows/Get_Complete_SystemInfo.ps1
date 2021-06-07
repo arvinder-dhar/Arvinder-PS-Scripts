@@ -9,7 +9,7 @@
 
 ## Install the ImportExcel Module
 
-iex (new-object System.Net.WebClient).DownloadString('https://raw.github.com/dfinke/ImportExcel/master/Install.ps1')
+Invoke-Expression (new-object System.Net.WebClient).DownloadString('https://raw.github.com/dfinke/ImportExcel/master/Install.ps1')
 
 $Report_ServerDetails = $null
 $computers = $null

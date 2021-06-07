@@ -29,7 +29,7 @@ If there are any other values in the file, the script execution will fail
 
 #####START#####
 
-cd C:\Temp #Change to the location where files are stored
+Set-Location C:\Temp #Change to the location where files are stored
 
 write-Host "Choose the number for the respective domain" -ForegroundColor Green
 Write-Host "1 = Domain1 `n2 = Domain2" -ForegroundColor Green
@@ -57,7 +57,7 @@ Write-Host ""
  $domain1_operation_selection = Read-Host
 
  if ($domain1_operation_selection -like "Read") {Write-Host "You have choosen Read operation" -ForegroundColor Cyan
- Get-QADGroupMember -Proxy -Identity domain1_group1 | select -Property samaccountname,dn | sort samaccountname -Descending | Format-Table -AutoSize -Wrap
+ Get-QADGroupMember -Proxy -Identity domain1_group1 | Select-Object -Property samaccountname,dn | Sort-Object samaccountname -Descending | Format-Table -AutoSize -Wrap
  
  }
  elseif ($domain1_operation_selection -like "Add") {Write-Host "You have choosen Add Operation" -ForegroundColor Cyan
@@ -81,7 +81,7 @@ Write-Host ""
  $domain1_operation_selection = Read-Host
 
  if ($domain1_operation_selection -like "Read") {Write-Host "You have choosen Read operation" -ForegroundColor cyan
- Get-QADGroupMember -Proxy -Identity domain1_group2 | select -Property samaccountname,dn | sort samaccountname -Descending | Format-Table -AutoSize -Wrap 
+ Get-QADGroupMember -Proxy -Identity domain1_group2 | Select-Object -Property samaccountname,dn | Sort-Object samaccountname -Descending | Format-Table -AutoSize -Wrap 
  
  }
  elseif ($domain1_operation_selection -like "Add") {Write-Host "You have choosen Add Operation" -ForegroundColor Cyan
@@ -118,7 +118,7 @@ elseif ($Domain_Selection -eq 2) {Write-Host "You have choosen Domain2" -Foregro
  $domain2_operation_selection = Read-Host
 
  if ($domain2_operation_selection -like "Read") {Write-Host "You have choosen Read operation" -ForegroundColor Cyan
- Get-QADGroupMember -Proxy -Identity domain2_group1 | select -Property samaccountname,dn | sort samaccountname -Descending | Format-Table -AutoSize -Wrap
+ Get-QADGroupMember -Proxy -Identity domain2_group1 | Select-Object -Property samaccountname,dn | Sort-Object samaccountname -Descending | Format-Table -AutoSize -Wrap
  
  }
  elseif ($domain2_operation_selection -like "Add") {Write-Host "You have choosen Add Operation" -ForegroundColor Cyan
@@ -142,7 +142,7 @@ elseif ($Domain_Selection -eq 2) {Write-Host "You have choosen Domain2" -Foregro
  $domain2_operation_selection = Read-Host
 
  if ($domain2_operation_selection -like "Read") {Write-Host "You have choosen Read operation" -ForegroundColor Cyan
- Get-QADGroupMember -Proxy -Identity domain2_group2 | select -Property samaccountname,dn | sort samaccountname -Descending | Format-Table -AutoSize -Wrap
+ Get-QADGroupMember -Proxy -Identity domain2_group2 | Select-Object -Property samaccountname,dn | Sort-Object samaccountname -Descending | Format-Table -AutoSize -Wrap
  
  }
  elseif ($domain2_operation_selection -like "Add") {Write-Host "You have choosen Add Operation" -ForegroundColor Cyan

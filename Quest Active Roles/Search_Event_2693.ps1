@@ -21,7 +21,7 @@ https://powershell.org/forums/topic/invoke-command-remove-pscomputername/
 
 #####START#####
 
-cd C:\Users\$env:username\desktop #Change Directory to current Logged in User
+Set-Location C:\Users\$env:username\desktop #Change Directory to current Logged in User
 
 Invoke-Command -ComputerName ars1,ars2,ars3,ars4,ars5 -ScriptBlock {
 

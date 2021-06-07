@@ -44,7 +44,7 @@ $servers = Get-Content .\servers.txt
        $version = $null
        $release = $null
 
-       $ServerDetails = "" | Select ServerName,Version,Release
+       $ServerDetails = "" | Select-Object ServerName,Version,Release
        $ServerDetails.ServerName = $server
 
        $version = Invoke-Command -ComputerName $server -ScriptBlock { (Get-Childitem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full').GetValue("Version") }
@@ -60,7 +60,7 @@ $servers = Get-Content .\servers.txt
        
 Catch{
 
-      $ServerDetails = "" | Select ServerName,Version,Release
+      $ServerDetails = "" | Select-Object ServerName,Version,Release
 
       $ServerDetails.ServerName = $Server 
       $ServerDetails.Version = "Server Up, however no info fetched"
@@ -74,7 +74,7 @@ Catch{
 
 else {
 
-      $ServerDetails = "" | Select ServerName,Version,Release
+      $ServerDetails = "" | Select-Object ServerName,Version,Release
 
       $ServerDetails.ServerName = $Server 
       $ServerDetails.Version = "Server not reachable"

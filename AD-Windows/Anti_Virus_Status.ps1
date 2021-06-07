@@ -21,7 +21,7 @@ $ping = Test-Connection -ComputerName $server -Quiet
 
        try {
 
-       $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+       $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
        $ServerDetails.ComputerName = $Server
        $ServerDetails.Access_Status = "Reachable"
 
@@ -54,7 +54,7 @@ $ping = Test-Connection -ComputerName $server -Quiet
        
        catch {
        
-      $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+      $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
       $ServerDetails.ComputerName = $Server 
       $ServerDetails.Access_Status = "Not reachable"
       $ServerDetails.Agent_Status = "NA"
@@ -68,7 +68,7 @@ $ping = Test-Connection -ComputerName $server -Quiet
 
 else {
 
-      $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+      $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
       $ServerDetails.ComputerName = $Server 
       $ServerDetails.Access_Status = "Not reachable"
       $ServerDetails.Agent_Status = "NA"
@@ -90,7 +90,7 @@ $fqdn = $server + "." + $server.SubString(0,5) + ".remaining_FQDN_Part" # this i
 
        try {
 
-       $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+       $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
        $ServerDetails.ComputerName = $fqdn
        $ServerDetails.Access_Status = "Reachable"
 
@@ -122,7 +122,7 @@ $fqdn = $server + "." + $server.SubString(0,5) + ".remaining_FQDN_Part" # this i
        
        catch {
        
-      $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+      $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
       $ServerDetails.ComputerName = $fqdn 
       $ServerDetails.Access_Status = "Not reachable"
       $ServerDetails.Agent_Status = "NA"
@@ -136,7 +136,7 @@ $fqdn = $server + "." + $server.SubString(0,5) + ".remaining_FQDN_Part" # this i
 
 else {
 
-      $ServerDetails = "" | Select ComputerName,Access_Status,Agent_Status,Service_Status
+      $ServerDetails = "" | Select-Object ComputerName,Access_Status,Agent_Status,Service_Status
       $ServerDetails.ComputerName = $fqdn 
       $ServerDetails.Access_Status = "Not reachable"
       $ServerDetails.Agent_Status = "NA"

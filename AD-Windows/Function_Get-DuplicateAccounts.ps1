@@ -37,9 +37,9 @@ $domain1_users = (Get-ADUser -Filter 'name -like "*"' -Server domain1 | Where-Ob
 $domain2_users = (Get-ADUser -Filter 'name -like "*"' -server domain2 | Where-Object {$_.samaccountname -like "a*" -and $_.enabled -eq $true}).samaccountname
 $domain3_users = (Get-ADUser -Filter 'name -like "*"' -server domain3 | Where-Object {$_.samaccountname -like "a*" -and $_.enabled -eq $true}).samaccountname
 
-$domain1_domain2 = Compare-Object -ReferenceObject $domain1 -DifferenceObject $domain2 -IncludeEqual -ExcludeDifferent -PassThru
-$domain2_domain3 = Compare-Object -ReferenceObject $domain2 -DifferenceObject $domain3 -ExcludeDifferent -IncludeEqual -PassThru
-$domain3_domain1 = Compare-Object -ReferenceObject $domain3 -DifferenceObject $domain1 -ExcludeDifferent -IncludeEqual -PassThru
+$domain1_domain2 = Compare-Object -ReferenceObject $domain1_users -DifferenceObject $domain2_users -IncludeEqual -ExcludeDifferent -PassThru
+$domain2_domain3 = Compare-Object -ReferenceObject $domain2_users -DifferenceObject $domain3_users -ExcludeDifferent -IncludeEqual -PassThru
+$domain3_domain1 = Compare-Object -ReferenceObject $domain3_users -DifferenceObject $domain1_users -ExcludeDifferent -IncludeEqual -PassThru
 
 $users = $domain1_domain2 + $domain2_domain3 + $domain3_domain1 | Select-Object -Unique
 

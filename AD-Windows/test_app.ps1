@@ -10,7 +10,7 @@ Connect-AzureAD
 "Creating Azure AD Applications. This may take 1-2 minutes."	
 "Creating Web Application $DisplayName and Secret key with one year expiration "
 
-$SvcPrincipal = Get-AzureADServicePrincipal -All $true | ? { $_.DisplayName -match "Microsoft Rights Management Services" }
+$SvcPrincipal = Get-AzureADServicePrincipal -All $true | Where-Object { $_.DisplayName -match "Microsoft Rights Management Services" }
 $ReqAccess = New-Object -TypeName "Microsoft.Open.AzureAD.Model.RequiredResourceAccess"
 $ReqAccess.ResourceAppId = $SvcPrincipal.AppId
 
@@ -19,7 +19,7 @@ $Role2 = New-Object -TypeName "Microsoft.Open.AzureAD.Model.ResourceAccess" -Arg
 $Role3 = New-Object -TypeName "Microsoft.Open.AzureAD.Model.ResourceAccess" -ArgumentList "006e763d-a822-41fc-8df5-8d3d7fe20022", "Role"
 $ReqAccess.ResourceAccess = $Role1, $Role2, $Role3
 
-$SvcPrincipalUL = Get-AzureADServicePrincipal -All $true | ? { $_.DisplayName -match "Microsoft Information Protection Sync Service" }
+$SvcPrincipalUL = Get-AzureADServicePrincipal -All $true | Where-Object { $_.DisplayName -match "Microsoft Information Protection Sync Service" }
 $ReqAccessUL = New-Object -TypeName "Microsoft.Open.AzureAD.Model.RequiredResourceAccess"
 $ReqAccessUL.ResourceAppId = $SvcPrincipalUL.AppId
 

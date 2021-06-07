@@ -8,7 +8,7 @@ foreach ($domain in $domains)
 
 {
 try {
-$gpo_report = "" | select GPOName,GPODomain
+$gpo_report = "" | Select-Object GPOName,GPODomain
 $gpo_report.GPOName += (Get-GPO -all -Domain $domain | Where-Object {$_.displayname -like "*wsus*"}).Displayname -join "," | Out-String
 $gpo_report.GPODomain += $domain
 #(Get-GPO -all -Domain $domain | Where-Object {$_.displayname -like "*wsus*"}).DomainName -join "," | Out-String

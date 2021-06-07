@@ -17,7 +17,7 @@
  
      try {
  
-           $ServerDetails = "" | Select ComputerName,passwordlastset,pingstatus
+           $ServerDetails = "" | Select-Object ComputerName,passwordlastset,pingstatus
     
            $Server_netbios = $server.Split(".")[0]
            $date = (Get-ADComputer -Identity $Server_netbios -Properties * -Server $domain ).PasswordLastSet
@@ -40,7 +40,7 @@
        
     Catch {
  
-          $ServerDetails = "" | Select ComputerName,passwordlastset,pingstatus
+          $ServerDetails = "" | Select-Object ComputerName,passwordlastset,pingstatus
  
           $ServerDetails.ComputerName = $Server
           $ServerDetails.passwordlastset = "Information cannot be fetched"

@@ -50,8 +50,8 @@ Function Get-Uptime {
     $Boot = Get-WmiObject -Class win32_operatingsystem -ComputerName $Computer -ErrorAction SilentlyContinue
     $startdate = $Boot.ConvertToDateTime($Boot.LastBootUpTime)
 
-    $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
-                    sort InstalledOn -Descending | select -First 1).InstalledOn
+    #$patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
+                   # sort InstalledOn -Descending | select -First 1).InstalledOn
 
     $EndDate =  Get-Date
     $uptime = (New-TimeSpan -Start $startdate -End $EndDate).days
@@ -137,7 +137,7 @@ Function Get-PatchDate {
  if ($remote -eq "True" -and $ping -eq "True") {
 
        $patchdate = (Get-WmiObject -Class win32_quickfixengineering -ComputerName $Computer -ErrorAction SilentlyContinue | 
-       sort InstalledOn -Descending | select -First 1).InstalledOn
+       Sort-Object InstalledOn -Descending | Select-Object -First 1).InstalledOn
 
        $EndDate =  Get-Date
        
@@ -222,7 +222,7 @@ Function Get-SystemInfo {
  if ($remote -eq "True" -and $ping -eq "True") {
 
     
-$value = [bool](Get-WmiObject -ComputerName $Computer -Class win32_computersystem -ErrorAction SilentlyContinue | select -Property * | Select-String "Virtual")
+$value = [bool](Get-WmiObject -ComputerName $Computer -Class win32_computersystem -ErrorAction SilentlyContinue | Select-Object -Property * | Select-String "Virtual")
     if ($value -eq "True"){ $type = "Virtual" }
 
     else { $type = "Physical"}
@@ -350,7 +350,7 @@ $ping = Test-Connection -ComputerName $Computer -Quiet
     {
 
 $data = Get-WmiObject -ComputerName $Computer -class Win32_logicalDisk -ErrorAction SilentlyContinue | Where-Object {$_.DriveType -eq '3'} |
-Select @{n='Computer Name';e={$_.PSComputerName}}, 
+Select-Object @{n='Computer Name';e={$_.PSComputerName}}, 
         @{n='Disk Name';e={$_.DeviceID}},
          @{n='Total Size(GB)';e={[math]::Round(($_.Size)/1GB,1)}},
           @{n='Free Space(GB)';e={[math]::Round(($_.Freespace)/1GB,1)}} -OutVariable data

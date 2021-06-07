@@ -48,7 +48,7 @@ Function Get-SystemInfo {
  if ($remote -eq "True" -and $ping -eq "True") {
 
     
-$value = [bool](Get-WmiObject -ComputerName $Computer -Class win32_computersystem -ErrorAction SilentlyContinue | select -Property * | Select-String "Virtual")
+$value = [bool](Get-WmiObject -ComputerName $Computer -Class win32_computersystem -ErrorAction SilentlyContinue | Select-Object -Property * | Select-String "Virtual")
     if ($value -eq "True"){ $type = "Virtual" }
 
     else { $type = "Physical"}

@@ -17,7 +17,7 @@ $domain = $server.domain
 
 try {
 
-$result = "" | select Device,Domain,Machine_in_Domain,Enabled
+$result = "" | Select-Object Device,Domain,Machine_in_Domain,Enabled
 
 $value = (Get-ADComputer -Identity $computer -Server $domain -Properties * -ErrorAction SilentlyContinue)
 $result.Device = $value.Name
@@ -32,7 +32,7 @@ $result
 
 catch {
 
-$result = "" | select Device,Domain,Machine_in_Domain,Enabled
+$result = "" | Select-Object Device,Domain,Machine_in_Domain,Enabled
 
 $result.Device = $computer
 $result.Domain = $domain

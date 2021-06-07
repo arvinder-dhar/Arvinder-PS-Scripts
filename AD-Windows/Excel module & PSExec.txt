@@ -1,0 +1,19 @@
+https://github.com/dfinke/ImportExcel
+
+####Powershell V5 and Later You can install ImportExcel directly from the Powershell Gallery
+[Recommended] Install to your personal Powershell Modules folder
+Install-Module ImportExcel -scope CurrentUser
+
+[Requires Elevation] Install for Everyone (computer Powershell Modules folder)
+Install-Module ImportExcel
+
+####Powershell V4 and Earlier To install to your personal modules folder (e.g. ~\Documents\WindowsPowerShell\Modules), run:
+
+iex (new-object System.Net.WebClient).DownloadString('https://raw.github.com/dfinke/ImportExcel/master/Install.ps1')
+
+
+SOURCE : https://blogs.technet.microsoft.com/heyscriptingguy/2015/11/25/introducing-the-powershell-excel-module-2/
+
+psexec @C:\Users\arvinder\Desktop\1.txt -w "C:\AV_Folder" C:\AV_Folder\AV.exe /q /s
+
+PsExec.exe @C:\Users\arvinder\Desktop\1.txt cmd /c "powershell -noninteractive -command Uninstall-WindowsFeature -Name Windows-Defender"

@@ -80,7 +80,6 @@ Function Enable-TLS1_2{
 	Write-Host 'TLS 1.2 has been Enabled.'
 }
 
-
 Enable-StrongCrypto
 Restart-Computer
 Disable-SSL2

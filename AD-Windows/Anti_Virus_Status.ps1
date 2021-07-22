@@ -151,3 +151,4 @@ else {
 
 $final_report
 $final_report | Export-Excel C:\Users\$env:USERNAME\Desktop\AV_Status.xlsx -AutoSize
+#end

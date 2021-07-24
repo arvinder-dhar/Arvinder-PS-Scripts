@@ -1,6 +1,5 @@
 <# 
-Description : Remove Conflict Objects from 4 Domains (See $DomainList for Domain Info)
-Script Modified by Arvinder
+Description : Remove Conflict Objects from AD Domains (See $DomainList for Domain Info)
 If object count is more than 20 , script will not remove any conflict object rather will ask to check the conflict objects manually
 
 #>

@@ -82,8 +82,8 @@ Function Enable-TLS1_2{
 
 Enable-StrongCrypto
 Restart-Computer
+Enable-TLS1_2
 Disable-SSL2
 Disable-SSL3
 Disable-TLS1
 Disable-TLS1_1
-Enable-TLS1_2

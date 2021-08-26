@@ -1,4 +1,12 @@
-#Connect-AzureAD
+<#
+Author : Arvinder
+Description :  The function will get the Expiration and Registration dates of the client secrets in Azure AD
+Dependency : "AzureAD" module and AAD user (On-prem Synced or cloud) which will be used for authentication
+Version : 1
+#>
+
+## Run this command before executing the Function
+# Connect-AzureAD
 
 Function Get-AzureADAppSecretInfo {
     [CmdletBinding()]
@@ -16,14 +24,12 @@ Function Get-AzureADAppSecretInfo {
 
 foreach ($oid in $objectid) {
 
-$report  =  "" | select Displayname,Startdate,Enddate
-
 try {
 $data = $null
-$data = Get-AzureADApplication -ObjectId $oid | select *
+$data = Get-AzureADApplication -ObjectId $oid | Select-Object *
 
 $extension = $null
-$extension = $data | select -ExpandProperty PasswordCredentials | select startdate,enddate
+$extension = $data | Select-Object -ExpandProperty PasswordCredentials | Select-Object startdate,enddate
 
 for ($i = 0; $i -lt $extension.startdate.Count; $i++)
 { 
@@ -43,10 +49,8 @@ for ($i = 0; $i -lt $extension.startdate.Count; $i++)
 
 catch {
 Write-Warning "No App Found with Object id : $oid"
-} 
-
 }
-
+}
 }
 
 End{}

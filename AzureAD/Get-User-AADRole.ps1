@@ -1,7 +1,7 @@
 <#
 Author : Arvinder
 Description : The Script will Get the Azure AD Roles of an On-Prem User Fectched From CSV
-Dependencies : "AzureADPreview" Module
+Dependencies : "AzureAD" Module and AAD user (On-prem Synced or cloud) which will be used for authentication
 
 #>
 

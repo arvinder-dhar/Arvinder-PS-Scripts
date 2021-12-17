@@ -1,0 +1,9 @@
+Note : Create a new repo & move the Scripts
+
+Include PS commands as well to test and deploy the resources
+
+Ideas
+1. Full flegded AD infrastructure
+    a. Users
+    b. Groups
+    c. AAD Connect and other Custom Softwares

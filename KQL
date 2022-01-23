@@ -61,6 +61,8 @@ SigninLogs
     
     //3. Global Admin Audit
     
+    // Join both the queries in the future
+    
     //Query 1
 
 AuditLogs 

@@ -128,3 +128,66 @@ city = LocationDetails.city
 | order by Hits
 | take 30
 //| render piechart
+
+
+
+//////////////////////////////////////////////////////
+///////////////////////////////////////
+
+PowerBI Queries
+
+/*
+The exported Power Query Formula Language (M Language ) can be used with Power Query in Excel
+and Power BI Desktop.
+For Power BI Desktop follow the instructions below: 
+1) Download Power BI Desktop from https://powerbi.microsoft.com/desktop/
+2) In Power BI Desktop select: 'Get Data' -> 'Blank Query'->'Advanced Query Editor'
+3) Paste the M Language script into the Advanced Query Editor and select 'Done'
+*/
+
+/*
+Top Apps Usage (By City)
+
+Following the same example one can modify the M query as per req... the only thing that needs to be changed is let source = part ...replace the whole block with your custom KQL query
+*/
+
+
+
+let AnalyticsQuery =
+let Source = Json.Document(Web.Contents("https://api.loganalytics.io/v1/workspaces/<Workspace-ID>/query", 
+[Query=[#"query"="SigninLogs
+| where IsInteractive == ""true"" and ResourceDisplayName != """"
+| project
+Time_UTC =TimeGenerated,
+Application = ResourceDisplayName,
+Country = LocationDetails.countryOrRegion,
+State = LocationDetails.state,
+city = LocationDetails.city
+| summarize Hits=count() by Application,tostring(city)
+| order by Hits
+| take 30
+
+",#"x-ms-app"="OmsAnalyticsPBI",#"timespan"="P1D",#"prefer"="ai.response-thinning=true"],Timeout=#duration(0,0,4,0)])),
+TypeMap = #table(
+{ "AnalyticsTypes", "Type" }, 
+{ 
+{ "string",   Text.Type },
+{ "int",      Int32.Type },
+{ "long",     Int64.Type },
+{ "real",     Double.Type },
+{ "timespan", Duration.Type },
+{ "datetime", DateTimeZone.Type },
+{ "bool",     Logical.Type },
+{ "guid",     Text.Type },
+{ "dynamic",  Text.Type }
+}),
+DataTable = Source[tables]{0},
+Columns = Table.FromRecords(DataTable[columns]),
+ColumnsWithType = Table.Join(Columns, {"type"}, TypeMap , {"AnalyticsTypes"}),
+Rows = Table.FromRows(DataTable[rows], Columns[name]), 
+Table = Table.TransformColumnTypes(Rows, Table.ToList(ColumnsWithType, (c) => { c{0}, c{3}}))
+in
+Table
+in AnalyticsQuery
+
+

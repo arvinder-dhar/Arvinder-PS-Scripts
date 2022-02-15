@@ -15,7 +15,7 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: '32 9 * * 2'
+    - cron: '03 10 * * 2'
     
 jobs:
   build:
@@ -32,8 +32,8 @@ jobs:
           path: .\
           recurse: true 
           # Include your own basic security rules. Removing this option will run all the rules 
-          includeRule: "PSAvoidGlobalAliases"
-          #includeRule: '"PSAvoidGlobalAliases", "PSAvoidUsingConvertToSecureStringWithPlainText"'
+          #includeRule: "PSAvoidGlobalAliases"
+          includeRule: '"PSAvoidGlobalAliases", "PSAvoidUsingConvertToSecureStringWithPlainText"'
           output: results.sarif
       
       # Upload the SARIF file generated in the previous step

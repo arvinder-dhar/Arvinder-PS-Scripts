@@ -1,2 +1,4 @@
-# Ignore all text files
-*.txt
+# Place file extension that you want to exclude like .pyc, .log
+
+# Ignore all text files*
+#*.txt

@@ -1,4 +1,7 @@
 # Place file extension that you want to exclude like .pyc, .log
 
-# Ignore all text files*
-#*.txt
+# Ignore all exe files
+*.exe
+
+# Ignore all dll files
+*.dll

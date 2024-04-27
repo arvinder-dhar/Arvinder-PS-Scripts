@@ -1,0 +1,97 @@
+<#
+    Author : Arvinder 
+    Description : This Script will be used to reovoke refresh tokens for Terminated users
+    Environment : PROD Azure AD Tenant
+    Version : 2
+
+    Improvements : This script uses MS Graph PowerShell cmdlets
+
+    Run Schedule : Hourly
+    Check this Later --> https://github.com/microsoftgraph/msgraph-sdk-powershell/issues/1092
+#>
+
+####START####
+
+#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+#Set Location to the Parent Directory
+Set-Location somethingpath\folder
+
+$date = Get-Date -Format "MM-dd-yyyy_hh_mm_tt"
+
+#Create Log File
+
+$date = Get-Date -Format "MM-dd-yyyy_hh_mm_tt"
+$logfile = ".\Logs\Revoke_token_Log_$date.log"
+
+## Move last 20 logs to Archive folder
+
+if ((Get-ChildItem .\Logs | Where-Object { $_.name -notlike "archive" } | measure).count -ge 20) {
+
+  (Get-ChildItem .\Logs | Where-Object { $_.name -notlike "archive" }).name | `
+    ForEach-Object { Move-Item -Path .\Logs\$_ -Destination .\Logs\Archive -Verbose }
+}
+
+## Delete if Archive folder has 200 or more Reports
+
+$count = (Get-ChildItem .\Logs\Archive | measure).count
+
+if ($count -ge 200) {
+(Get-ChildItem .\Logs\Archive).name | ForEach-Object {Remove-Item .\Logs\Archive\$_ -Force }
+}
+
+Add-Content $logfile -Value 'Script Execution Begin'
+Get-Date -Format "MM-dd-yyyy hh:mm tt" | Add-Content $logfile -Force
+Add-Content $logfile ""
+"============================================================================" | Add-Content $logfile
+
+## Credential Manager Connection
+Import-Module CredentialManager
+$connection = Get-StoredCredential -Target Block
+
+## ROPC Grant Flow
+$TenantID = "TenantID"
+$ClientId = "ClientId"
+$scope = "https://graph.microsoft.com/.default"
+$loginURL = "https://login.microsoftonline.com"
+
+$body = @{
+        grant_type = "password";
+        scope      = $scope;
+        client_id  = $ClientID;
+        username   = $connection.UserName;
+        password   = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($connection.Password))
+    }
+
+$token = Invoke-RestMethod -Method Post -Uri $("$loginURL/$tenantid/oauth2/v2.0/token") -Body $body
+
+## Connect to MG Graph
+Connect-MgGraph -AccessToken $token.access_token
+Select-MgProfile beta
+
+$final_revoke_users_list = Get-Content revoke_PRT_user_list.txt
+$final_revoke_users_list_count = $final_revoke_users_list.count
+Add-Content $logfile -Value "$final_revoke_users_list_count new users found, revoking access token now"
+Add-Content $logfile -Value ""
+Add-Content $logfile -Value $final_revoke_users_list
+
+Add-Content $logfile -Value ""
+Add-Content $logfile -Value "Script Execution Completed"
+Get-Date -Format "MM-dd-yyyy hh:mm tt" | Add-Content $logfile -Force
+
+## NOTE : Module Required is "Microsoft.Graph.Users.Actions"
+    # When Migrating this Job to JC make sure "Install-Module -Name Microsoft.Graph.Users.Actions -RequiredVersion 1.1.0" step is included
+$final_revoke_users_list | ForEach-Object {Invoke-MgInvalidateUserRefreshToken -UserId $_ -ErrorAction SilentlyContinue}
+$mail_body = "$final_revoke_users_list_count new users found"
+
+## Mail Details
+$From = "something.here@gmail.com"
+$To = "something.here@gmail.com"
+$smtp = "smtpserver.com"
+$subject = "Token Revocation"
+
+Send-MailMessage -From $From -To $To -SmtpServer $smtp -Subject $subject -Body $mail_body -Attachments $logfile
+
+## Disconnect Graph
+Disconnect-MgGraph

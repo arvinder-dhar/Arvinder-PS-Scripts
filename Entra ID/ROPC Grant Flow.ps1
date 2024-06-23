@@ -46,31 +46,6 @@ $DataUrl = "https://graph.microsoft.com/v1.0/users/user-upn"
 ## Get Data
 Invoke-RestMethod -Headers @{Authorization = "Bearer $($token.access_token)"} -Uri $DataUrl -Method Get
 
-
-########################################################
-######################### Client Credentials ######################### 
-########################################################
-
-## CURL
-curl.exe -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "client_id=<client-id>&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default&client_secret=<client-secret>&grant_type=client_credentials" --url "https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token"
-
-## PowerShell
-
-$ClientID = "<Client-Id>"
-$ClientSecret = "<Client-Secret>"
-$loginURL = "https://login.microsoftonline.com"
-$tenantid = "<Tenant-Id>"
-$scope = "https://graph.microsoft.com/.default"
-
-$body = @{
-  grant_type="client_credentials";
-  scope=$scope;
-  client_id=$ClientID;
-  client_secret=$ClientSecret
-  }
-
-  $token = Invoke-RestMethod -Method Post -Uri $("$loginURL/$tenantid/oauth2/v2.0/token") -Body $body
-
   <# 
   #####################Utilize the Token#########################
   
